@@ -33,7 +33,7 @@ const Model = ({
   setGroupProfile,
 }: ModelProps) => {
   const uuid = uuidv4();
-  const optionList = Object.entries(selectedCandidatesLists || {})
+  const optionList: any = Object.entries(selectedCandidatesLists || {})
     ?.map(([keys, details]: any) => {
       return details;
     })
