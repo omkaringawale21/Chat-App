@@ -1,0 +1,62 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: cursive;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#scroll {
+  background-image: url("../public/images/chat_background.png");
+  background-repeat: repeat;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding-bottom: 100px;
+  transition: all 0.3s linear;
+}
+
+#scroll::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+#scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#scroll::-webkit-scrollbar-thumb {
+  background: #dddddd;
+  border-radius: 10px;
+}
+
+#chat_box:hover #chatitem_btn_hover{
+  display: flex;
+}
+
+#chatitem_btn_hover{
+  display: none;
+}
+
+#header_icon_logout {
+  transform: rotate(90deg);
+}
+
+#scroll_sidebar::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+#scroll_sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#scroll_sidebar::-webkit-scrollbar-thumb {
+  background: #dddddd;
+  border-radius: 10px;
+}
+
+#highlighted_text {
+  background-color: #f57842;
+}
