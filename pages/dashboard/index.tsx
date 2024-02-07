@@ -74,11 +74,11 @@ const index = () => {
   const router = useRouter();
   const user = useAuthState(auth);
   const [messageText, setMessageText] = useState<string>("");
-  const [usersArr, setUsersArr] = useState([]);
+  const [usersArr, setUsersArr] = useState<any[]>([]);
   const [anotherUserActivate, setAnotherUserActivate] =
     useState<AnotherUserActivate>();
   const [toggle, setToggle] = useState<boolean>(false);
-  const [chatsArr, setChatsArr] = useState([]);
+  const [chatsArr, setChatsArr] = useState<[] | any>([]);
   const [avatar, setAvatar] = useState<File | undefined>();
   const [previewImg, setPreviewImg] = useState<string>("");
   const [threeDotsIconToggle, setthreeDotsIconToggle] =
@@ -91,10 +91,10 @@ const index = () => {
   const scrollRef: any = useRef();
   const [loadImage, setLoadImage] = useState<number>(0);
   const [goToPageDown, setGoToPageDown] = useState<boolean>(false);
-  const [anotherUsersIdsListArr, setAnotherUsersIdsListArr] = useState([]);
+  const [anotherUsersIdsListArr, setAnotherUsersIdsListArr] = useState<[] | any>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [selectedCandidatesLists, setSelectedCandidatesLists] = useState([]);
-  const [services, setServices] = useState([]);
+  const [selectedCandidatesLists, setSelectedCandidatesLists] = useState<[] | any>([]);
+  const [services, setServices] = useState<[] | any>([]);
   const [groupName, setGroupName] = useState<string>("");
   const [groupProfile, setGroupProfile] = useState<string>("");
   const [findIdForGroupId, setFindIdForGroupId] = useState<string>("");
@@ -1088,7 +1088,6 @@ const index = () => {
                   setSearchIconToggle(false);
                   setPreviewImg("");
                   setSearchChatText("");
-                  setAvatar({ name: "" });
                   event?.stopPropagation();
                 },
               })}

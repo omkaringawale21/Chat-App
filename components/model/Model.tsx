@@ -18,7 +18,6 @@ interface ModelProps {
   groupName: any;
   setGroupProfile: any;
   groupProfile: any;
-  checkSelectedCandidatesLists: [];
 }
 
 const Model = ({

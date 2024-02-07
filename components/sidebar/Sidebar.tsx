@@ -29,8 +29,8 @@ const Sidebar = ({
 }: any) => {
   const [currentUserId, setCurrentUserId] = useState<string | null>();
   const [searchChatUser, setSearchChatUser] = useState<string>("");
-  const [combinedUser, setCombinedUser] = useState([]);
-  const [groupUser, setGroupUser] = useState([]);
+  const [combinedUser, setCombinedUser] = useState<[] | any>([]);
+  const [groupUser, setGroupUser] = useState<[] | any>([]);
 
   const curHightlightedUser = () => {
     const userid = localStorage.getItem("user_id_no");
@@ -70,12 +70,12 @@ const Sidebar = ({
       }
     });
   };
-  // curHightlightedUser();
+
   useEffect(() => {
     curHightlightedUser();
 
-    usersArr.map(([key, data]: any) => {
-      Object.entries(data || {})?.map(([keys, details]: any) => {
+    usersArr.map(([key, data]: [string, any]) => {
+      Object.entries(data || {})?.map(([keys, details]: [string, any]) => {
         if (combinedUser?.includes(keys) || groupUser?.includes(keys)) {
           if (details?.messages) {
             return Object.entries(details?.messages || {})
@@ -193,19 +193,19 @@ const Sidebar = ({
                     setSearchChatUser("");
                     clearNoOfUnseenMessages(
                       Object.entries(data || {})?.map(
-                        ([keys, details]: any) => {
+                        ([keys, details]: [string, any]) => {
                           if (
                             combinedUser?.includes(keys) ||
                             groupUser?.includes(keys)
                           ) {
                             if (details?.messages) {
                               return Object.entries(details?.messages || {})
-                                ?.map(([ids, values]: any) => {
+                                ?.map(([ids, values]: [string, any]) => {
                                   return values;
                                 })
                                 ?.map((e) => e?.isSeen === false)
                                 ? Object.entries(details?.messages || {})
-                                    ?.map(([ids, values]: any) => {
+                                    ?.map(([ids, values]: [string, any]) => {
                                       return values;
                                     })
                                     ?.map((e) => e?.uid)
@@ -266,14 +266,14 @@ const Sidebar = ({
                           fontSize={"14px"}
                         >
                           {Object.entries(data || {})?.map(
-                            ([keys, details]: any) => {
+                            ([keys, details]: [string, any]) => {
                               if (
                                 combinedUser?.includes(keys) ||
                                 groupUser?.includes(keys)
                               ) {
                                 if (details?.messages) {
                                   return Object.entries(details?.messages || {})
-                                    ?.map(([ids, values]: any) => {
+                                    ?.map(([ids, values]: [string, any]) => {
                                       return values;
                                     })
                                     ?.sort((a, b) => a.sendAt - b.sendAt)
@@ -282,7 +282,7 @@ const Sidebar = ({
                                     ?.message?.includes("png", "jpg", "jpeg")
                                     ? "Photo"
                                     : Object.entries(data || {})?.map(
-                                        ([keys, details]: any) => {
+                                        ([keys, details]: [string, any]) => {
                                           if (
                                             combinedUser?.includes(keys) ||
                                             groupUser?.includes(keys)
@@ -291,7 +291,7 @@ const Sidebar = ({
                                               return Object.entries(
                                                 details?.messages || {}
                                               )
-                                                ?.map(([ids, values]: any) => {
+                                                ?.map(([ids, values]: [string, any]) => {
                                                   return values;
                                                 })
                                                 ?.sort(
@@ -327,7 +327,7 @@ const Sidebar = ({
                       >
                         <Text position={"absolute"} fontSize={"10px"} top={1}>
                           {Object.entries(data || {})?.map(
-                            ([keys, details]: any) => {
+                            ([keys, details]: [string, any]) => {
                               if (
                                 combinedUser?.includes(keys) ||
                                 groupUser?.includes(keys)
@@ -336,7 +336,7 @@ const Sidebar = ({
                                   return Number(
                                     new Date(
                                       Object.entries(details?.messages || {})
-                                        ?.map(([ids, values]: any) => {
+                                        ?.map(([ids, values]: [string, any]) => {
                                           return values;
                                         })
                                         ?.sort((a, b) => a.sendAt - b.sendAt)
@@ -352,7 +352,7 @@ const Sidebar = ({
                                             Object.entries(
                                               details?.messages || {}
                                             )
-                                              ?.map(([ids, values]: any) => {
+                                              ?.map(([ids, values]: [string, any]) => {
                                                 return values;
                                               })
                                               ?.sort(
@@ -366,7 +366,7 @@ const Sidebar = ({
                                         ) - 12
                                       }:${new Date(
                                         Object.entries(details?.messages || {})
-                                          ?.map(([ids, values]: any) => {
+                                          ?.map(([ids, values]: [string, any]) => {
                                             return values;
                                           })
                                           ?.sort((a, b) => a.sendAt - b.sendAt)
@@ -380,7 +380,7 @@ const Sidebar = ({
                                           Object.entries(
                                             details?.messages || {}
                                           )
-                                            ?.map(([ids, values]: any) => {
+                                            ?.map(([ids, values]: [string, any]) => {
                                               return values;
                                             })
                                             ?.sort(
@@ -393,7 +393,7 @@ const Sidebar = ({
                                           ?.substring(16, 18)
                                       )}:${new Date(
                                         Object.entries(details?.messages || {})
-                                          ?.map(([ids, values]: any) => {
+                                          ?.map(([ids, values]: [string, any]) => {
                                             return values;
                                           })
                                           ?.sort((a, b) => a.sendAt - b.sendAt)
@@ -411,14 +411,14 @@ const Sidebar = ({
                         </Text>
                         <Box position={"absolute"} bottom={1}>
                           {Object.entries(data || {})?.map(
-                            ([keys, details]: any) => {
+                            ([keys, details]: [string, any]) => {
                               if (
                                 combinedUser?.includes(keys) ||
                                 groupUser?.includes(keys)
                               ) {
                                 if (details?.messages) {
                                   return Object.entries(details?.messages || {})
-                                    ?.map(([ids, values]: any) => {
+                                    ?.map(([ids, values]: [string, any]) => {
                                       return values;
                                     })
                                     ?.sort((a, b) => a.sendAt - b.sendAt)
@@ -442,7 +442,7 @@ const Sidebar = ({
                                       >
                                         {
                                           Object.entries(data || {})
-                                            ?.map(([keys, details]: any) => {
+                                            ?.map(([keys, details]: [string, any]) => {
                                               if (
                                                 combinedUser?.includes(keys) ||
                                                 groupUser?.includes(keys)
@@ -451,7 +451,7 @@ const Sidebar = ({
                                                   return Object.entries(
                                                     details?.messages || {}
                                                   )?.map(
-                                                    ([ids, values]: any) => {
+                                                    ([ids, values]: [string, any]) => {
                                                       return values;
                                                     }
                                                   );
