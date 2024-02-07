@@ -13,7 +13,7 @@ import { getDatabase, ref, set } from "firebase/database";
 import { app, auth } from "../../firebase/config";
 const bgImage = require("../../public/images/register_logo.png");
 
-const index = () => {
+const Register = () => {
   const [show, setShow] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
@@ -313,4 +313,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Register;

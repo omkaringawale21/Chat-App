@@ -17,6 +17,21 @@ import Link from "next/link";
 import { auth } from "../../firebase/config";
 const checkImage = require("../../public/images/read.png");
 
+interface ChatItemProps {
+  text: string,
+  uid: string,
+  photoURL: string,
+  typeOfSender: boolean,
+  sendAt: string,
+  senderName: string,
+  getAllInfo: any,
+  searchChatText: string,
+  deleteInfo: any,
+  loadImage: number,
+  user: any,
+  loader: boolean,
+}
+
 const ChatItem = ({
   text,
   uid,
@@ -29,7 +44,8 @@ const ChatItem = ({
   deleteInfo,
   loadImage,
   user,
-}: any) => {
+  loader,
+}: ChatItemProps) => {
   const dropDownArr = ["Edit", "Delete"];
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const timeHrs: any = new Date(sendAt).toString().substring(16, 18);
@@ -40,8 +56,10 @@ const ChatItem = ({
     window.addEventListener("click", () => {
       setOpenDropdown(false);
     });
-  }, [user]);
 
+    console.log("loading", loader);
+  }, [user]);
+  
   return (
     <Box
       marginLeft={typeOfSender ? "auto" : 0}
@@ -74,7 +92,7 @@ const ChatItem = ({
         zIndex={1000}
         nativeID="chatitem_btn_hover"
         onPress={() => {
-          setOpenDropdown((state: any) => !state);
+          uid && setOpenDropdown((state: any) => !state);
         }}
       >
         <ThreeDotsIcon />
@@ -94,7 +112,9 @@ const ChatItem = ({
                   setOpenDropdown(false);
                 }}
               >
-                <Text color={"#000"}>{operation}</Text>
+                <Text color={"#000"}>
+                  {loader && operation === "Edit" ? "Loading.." : operation}
+                </Text>
               </Button>
             ) : (
               operation !== "Edit" && (
@@ -126,14 +146,14 @@ const ChatItem = ({
         color={colors.black}
       >
         {typeOfSender ? (
-          Number(timeHrs >= 12) ? (
+          Number(timeHrs > 12) ? (
             `${Number(timeHrs - 12)}:${timeMins} PM`
           ) : (
             `${timeHrs}:${timeMins} AM`
           )
         ) : (
           <>
-            {Number(timeHrs >= 12)
+            {Number(timeHrs > 12)
               ? `${Number(timeHrs - 12)}:${timeMins} PM`
               : `${timeHrs}:${timeMins} AM`}
           </>
@@ -195,8 +215,8 @@ const ChatItem = ({
                   >
                     <defs>
                       <linearGradient id="GradientColor">
-                        <stop offset={"0%"} stop-color={"#327da8"} />
-                        <stop offset={"100%"} stop-color={"#d84ced"} />
+                        <stop offset={"0%"} stopColor={"#327da8"} />
+                        <stop offset={"100%"} stopColor={"#d84ced"} />
                       </linearGradient>
                     </defs>
                     <circle cx={80} cy={80} r={70} strokeLinecap="round" />

@@ -10,7 +10,7 @@ import {
 const db = getDatabase(app);
 
 // Store Messages In Database Realtime
-export const messageSendTwoAuth = async ({
+export const MessageSendTwoAuth = async ({
   user,
   anotherUserActivate,
   uuid,
@@ -56,7 +56,7 @@ export const messageSendTwoAuth = async ({
 };
 
 // Get Messages Between Two Users
-export const exisitsMessageSendTwoAuth = async ({
+export const ExisitsMessageSendTwoAuth = async ({
   user,
   anotherUserActivate,
   messageuid,
@@ -102,7 +102,7 @@ export const exisitsMessageSendTwoAuth = async ({
 };
 
 // Delete Existing Message
-export const deleteExistingMessage = async ({
+export const DeleteExistingMessage = async ({
   user,
   anotherUser,
   uid,
@@ -131,7 +131,7 @@ export const deleteExistingMessage = async ({
 };
 
 // Unseen & Unread Messages Will Clear
-export const clearSidebarNoOfChatList = async ({
+export const ClearSidebarNoOfChatList = async ({
   user,
   anotherUserActivate,
   messageuid,
@@ -197,7 +197,7 @@ export const clearSidebarNoOfChatList = async ({
 };
 
 // Get User Details
-export const letsChatWithUser = async ({ id }: any) => {
+export const LetsChatWithUser = async ({ id }: any) => {
   return new Promise(async (resolve: any, reject: any) => {
     await get(ref(db, `usercollections/${id}`))
       .then((snapshot: any) => {
@@ -211,23 +211,23 @@ export const letsChatWithUser = async ({ id }: any) => {
 };
 
 // File Upload
-export const uploadFile = async ({ fileName }: any) => {
-  return new Promise(async (resolve: any, reject: any) => {
-    const storage: any = getStorage();
-    const storageRef: any = ref(storage, `images/${fileName}`);
+// export const UploadFile = async ({ fileName }: any) => {
+//   return new Promise(async (resolve: any, reject: any) => {
+//     const storage: any = getStorage();
+//     const storageRef: any = ref(storage, `images/${fileName}`);
 
-    uploadBytes(storageRef, fileName)
-      .then((snapshot: any) => {
-        // console.log('Uploaded a blob or file!');
-      })
-      .catch((err) => {
-        reject();
-      });
-  });
-};
+//     uploadBytes(storageRef, fileName)
+//       .then((snapshot: any) => {
+//         // console.log('Uploaded a blob or file!');
+//       })
+//       .catch((err) => {
+//         reject();
+//       });
+//   });
+// };
 
 // Create New Group
-export const createGroupNew = async ({
+export const CreateGroupNew = async ({
   groupName,
   services,
   uuid,
@@ -270,7 +270,7 @@ export const createGroupNew = async ({
 };
 
 // Store Messages In Database Realtime
-export const messageSendInGroup = async ({ uuid, uid, messageData }: any) => {
+export const MessageSendInGroup = async ({ uuid, uid, messageData }: any) => {
   return new Promise(async (resolve: any, reject: any) => {
     try {
       await update(
@@ -291,7 +291,7 @@ export const messageSendInGroup = async ({ uuid, uid, messageData }: any) => {
 };
 
 // Edit and Store Messages In Database Realtime
-export const editMessageSendInGroup = async ({
+export const EditMessageSendInGroup = async ({
   uuid,
   uid,
   messageData,
@@ -316,7 +316,7 @@ export const editMessageSendInGroup = async ({
 };
 
 // Delete Existing Message
-export const deleteExistingMessageInGroup = async ({
+export const DeleteExistingMessageInGroup = async ({
   anotherUser,
   uid,
 }: any) => {
@@ -338,7 +338,7 @@ export const deleteExistingMessageInGroup = async ({
 };
 
 // Delete Group
-export const deleteGroup = async ({id}: any) => {
+export const DeleteGroup = async ({id}: any) => {
   return new Promise(async (resolve: any, reject: any) => {
     try {
       await remove(

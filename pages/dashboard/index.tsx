@@ -38,14 +38,14 @@ import { uuidv4 } from "@firebase/util";
 import ChatItem from "../../components/chatitem/ChatItem";
 import Sidebar from "../../components/sidebar/Sidebar";
 import {
-  deleteExistingMessage,
-  deleteExistingMessageInGroup,
-  deleteGroup,
-  editMessageSendInGroup,
-  exisitsMessageSendTwoAuth,
-  letsChatWithUser,
-  messageSendInGroup,
-  messageSendTwoAuth,
+  DeleteExistingMessage,
+  DeleteExistingMessageInGroup,
+  DeleteGroup,
+  EditMessageSendInGroup,
+  ExisitsMessageSendTwoAuth,
+  LetsChatWithUser,
+  MessageSendInGroup,
+  MessageSendTwoAuth,
 } from "../../firebase/database";
 import {
   getDownloadURL,
@@ -54,9 +54,9 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import Model from "../../components/model/Model";
-const sendMessage = require("../../public/images/send-message.png");
-const documentAdded = require("../../public/images/shear.png");
-const downArrow = require("../../public/images/down-arrow.svg");
+const SendMessage = require("../../public/images/send-message.png");
+const DocumentAdded = require("../../public/images/shear.png");
+const DownArrow = require("../../public/images/down-arrow.svg");
 import { useDropzone } from "react-dropzone";
 
 interface AnotherUserActivate {
@@ -70,7 +70,7 @@ interface AnotherUserActivate {
 
 const threeDotsArr = ["Logout", "Profile"];
 
-const index = () => {
+const Dashboard = () => {
   const router = useRouter();
   const user = useAuthState(auth);
   const [messageText, setMessageText] = useState<string>("");
@@ -99,6 +99,8 @@ const index = () => {
   const [groupProfile, setGroupProfile] = useState<string>("");
   const [findIdForGroupId, setFindIdForGroupId] = useState<string>("");
 
+  const [loader, setLoader] = useState<boolean>(false);
+
   const logoutUser = async () => {
     try {
       await signOut(auth);
@@ -112,7 +114,7 @@ const index = () => {
 
   const addUserToChat = async (id: any) => {
     localStorage.setItem("user_id_no", id);
-    await letsChatWithUser({ id }).then((res: any) => {
+    await LetsChatWithUser({ id }).then((res: any) => {
       setAnotherUserActivate({ ...res, uid: id });
       setToggle(false);
     });
@@ -284,7 +286,7 @@ const index = () => {
                     ?.find((e: any) => e);
 
                   checkIsId &&
-                    (await editMessageSendInGroup({
+                    (await EditMessageSendInGroup({
                       uuid: groupID,
                       uid: messageuid,
                       messageData,
@@ -307,7 +309,7 @@ const index = () => {
                     ?.find((e: any) => e);
 
                   checkIsId &&
-                    (await messageSendInGroup({
+                    (await MessageSendInGroup({
                       uuid: groupID,
                       uid: uuid,
                       messageData,
@@ -327,7 +329,7 @@ const index = () => {
                   previewImg !== "" &&
                   messageuid
                 ) {
-                  await exisitsMessageSendTwoAuth({
+                  await ExisitsMessageSendTwoAuth({
                     user,
                     anotherUserActivate,
                     messageuid,
@@ -347,7 +349,7 @@ const index = () => {
                   previewImg !== "" &&
                   !messageuid
                 ) {
-                  await messageSendTwoAuth({
+                  await MessageSendTwoAuth({
                     user,
                     anotherUserActivate,
                     uuid,
@@ -377,6 +379,8 @@ const index = () => {
     const db = getDatabase(app);
     const anotherUser = localStorage.getItem("user_id_no");
 
+    setLoader(true);
+
     const checkIsGroup = Object.entries(usersArr || {})
       .map(([key, data]: any) => data)
       ?.map(([ids, details]: any) => details)
@@ -392,11 +396,6 @@ const index = () => {
         const exists = snapshots.val();
         // console.log("getAllInfo", snapshots.val());
         localStorage.setItem("allow_edit_details", uid);
-        console.log(
-          "Get Info",
-          `messagescollection/${anotherUser}/messages/${uid}`,
-          checking?.groupId
-        );
 
         let checkIsThisImage = snapshots.val();
         checkIsThisImage = checkIsThisImage?.message?.includes(
@@ -410,11 +409,13 @@ const index = () => {
           setPreviousDate(exists?.sendAt);
           setPreviousUid(exists?.uid);
 
+          setLoader(false);
           setMessageText("");
         } else {
           setMessageText(exists?.message);
           setPreviousDate(exists?.sendAt);
 
+          setLoader(false);
           setPreviewImg("");
         }
       });
@@ -441,11 +442,13 @@ const index = () => {
           setPreviousDate(exists?.sendAt);
           setPreviousUid(exists?.uid);
 
+          setLoader(false);
           setMessageText("");
         } else {
           setMessageText(exists?.message);
           setPreviousDate(exists?.sendAt);
 
+          setLoader(false);
           setPreviewImg("");
         }
       });
@@ -464,8 +467,8 @@ const index = () => {
     });
 
     checking?.groupId
-      ? await deleteExistingMessageInGroup({ anotherUser, uid })
-      : await deleteExistingMessage({ user, anotherUser, uid });
+      ? await DeleteExistingMessageInGroup({ anotherUser, uid })
+      : await DeleteExistingMessage({ user, anotherUser, uid });
   };
 
   const messageSend = async () => {
@@ -507,7 +510,7 @@ const index = () => {
             ?.find((e: any) => e);
 
           checkIsId &&
-            (await editMessageSendInGroup({
+            (await EditMessageSendInGroup({
               uuid: groupID,
               uid: messageuid,
               messageData,
@@ -529,7 +532,7 @@ const index = () => {
             ?.find((e: any) => e);
 
           checkIsId &&
-            (await messageSendInGroup({
+            (await MessageSendInGroup({
               uuid: groupID,
               uid: uuid,
               messageData,
@@ -559,7 +562,7 @@ const index = () => {
         };
 
         if (anotherUserActivate?.uid && messageuid) {
-          await exisitsMessageSendTwoAuth({
+          await ExisitsMessageSendTwoAuth({
             user,
             anotherUserActivate,
             messageuid,
@@ -572,7 +575,7 @@ const index = () => {
 
           localStorage.removeItem("allow_edit_details");
         } else if (anotherUserActivate?.uid && !messageuid) {
-          await messageSendTwoAuth({
+          await MessageSendTwoAuth({
             user,
             anotherUserActivate,
             uuid,
@@ -592,7 +595,7 @@ const index = () => {
   };
 
   const deleteCurrentGroup = async (id: any) => {
-    await deleteGroup({id});
+    await DeleteGroup({id});
     localStorage.removeItem("GroupAdminId");
   };
 
@@ -1089,6 +1092,7 @@ const index = () => {
                   setPreviewImg("");
                   setSearchChatText("");
                   event?.stopPropagation();
+                  localStorage.removeItem("allow_edit_details");
                 },
               })}
             >
@@ -1140,23 +1144,6 @@ const index = () => {
                         {Object.keys(chatsArr).length
                           ? chatsArr?.map((item: any) => (
                               <>
-                                {/* <Box
-                                  display={"block"}
-                                  margin={"auto"}
-                                  backgroundColor={colors?.white}
-                                  padding={1}
-                                  borderRadius={"4px"}
-                                >
-                                  {new Date(item?.sendAt)
-                                    ?.toString()
-                                    ?.substring(4, 15) === new Date()?.toString()?.substring(4, 15) ?
-                                    "Today"
-                                    :
-                                    new Date(item?.sendAt)
-                                    ?.toString()
-                                    ?.substring(4, 15)
-                                  }
-                                </Box> */}
                                 <ChatItem
                                   key={item?.uid}
                                   uid={item?.uid}
@@ -1174,6 +1161,7 @@ const index = () => {
                                       : false
                                   }
                                   user={user}
+                                  loader={loader}
                                 />
                               </>
                             ))
@@ -1250,7 +1238,10 @@ const index = () => {
                 marginLeft={"2.5%"}
                 borderStyle={"none"}
                 focusOutlineColor={colors.light_gray_bg}
-                onChange={(e: any) => setMessageText(e.target.value)}
+                onChange={(e: any) => {
+                  setMessageText(e.target.value);
+                  e.target.value === "" && localStorage?.removeItem("allow_edit_details");
+                }}
                 InputRightElement={
                   <Pressable
                     width={"10%"}
@@ -1275,7 +1266,7 @@ const index = () => {
                     >
                       <Image
                         source={{
-                          uri: documentAdded.default.src,
+                          uri: DocumentAdded.default.src,
                         }}
                         width={"100%"}
                         height={"100%"}
@@ -1305,9 +1296,9 @@ const index = () => {
                     height={"2rem"}
                     onPress={goToBottomPage}
                   >
-                    <Image
+                    <Avatar
                       source={{
-                        uri: downArrow?.default?.src,
+                        uri: DownArrow?.default?.src,
                       }}
                       width={"2rem"}
                       height={"2rem"}
@@ -1349,7 +1340,7 @@ const index = () => {
                 >
                   <Image
                     source={{
-                      uri: sendMessage.default.src,
+                      uri: SendMessage.default.src,
                     }}
                     width={"100%"}
                     height={"100%"}
@@ -1364,4 +1355,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Dashboard;

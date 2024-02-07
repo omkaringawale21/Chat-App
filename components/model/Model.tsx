@@ -5,7 +5,7 @@ import React from "react";
 import colors from "../../styles/colors";
 import Select from "react-select";
 import { uuidv4 } from "@firebase/util";
-import { createGroupNew } from "../../firebase/database";
+import { CreateGroupNew } from "../../firebase/database";
 import { auth } from "../../firebase/config";
 
 interface ModelProps {
@@ -51,7 +51,7 @@ const Model = ({
     const groupAdmin = auth?.currentUser?.displayName;
     const groupAdminId = auth?.currentUser?.uid;
 
-    await createGroupNew({
+    await CreateGroupNew({
       groupName,
       services,
       uuid,

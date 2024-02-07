@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useState } from "react";
 import { Box, Text, Input, Button, HStack, Image } from "native-base";
 import Link from "next/link";

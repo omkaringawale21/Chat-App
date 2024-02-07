@@ -17,7 +17,7 @@ import {
 import React, { useEffect, useState } from "react";
 import colors from "../../styles/colors";
 import { auth } from "../../firebase/config";
-import { clearSidebarNoOfChatList } from "../../firebase/database";
+import { ClearSidebarNoOfChatList } from "../../firebase/database";
 
 const Sidebar = ({
   user,
@@ -61,7 +61,7 @@ const Sidebar = ({
       });
 
       if (e !== undefined) {
-        await clearSidebarNoOfChatList({
+        await ClearSidebarNoOfChatList({
           user: checking?.groupList?.length ? false : user,
           anotherUserActivate,
           messageuid: e,
